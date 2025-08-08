@@ -7,6 +7,7 @@ import datetime
 
 def ler_produto(lista_produtos): #verufuca se o produto ta na lista e ta ativo ou inativo
   id_produto = int(input("##### Informe o ID do produto: "))
+  resposta = ''
   if (id_produto in lista_produtos) and (lista_produtos[id_produto]['inativo'] == False):
     return id_produto
   
@@ -14,6 +15,9 @@ def ler_produto(lista_produtos): #verufuca se o produto ta na lista e ta ativo o
     print("##### Produto inativo!")
     input("##### Tecle <ENTER> para continuar...")
     return None
+  elif id_produto == 'p' or id_produto == 'P':
+    resposta = 'p'
+    return resposta 
 
   else:
     print("##### Produto não encontrado!")
@@ -90,14 +94,22 @@ def cadastrar_pedido(lista_pedidos, lista_clientes,lista_produtos):
   cpf = verifica_cliente(lista_clientes)
   if not cpf:
     return
-
-  id_produto = ler_produto(lista_produtos)
-  if not id_produto:
-    return
   
-  qtd = ler_quantidade(lista_produtos,id_produto)
-  if not qtd:
-    return
+  resposta = ''
+
+  pedido_itens = []
+  pedido_itens_qtd = []
+
+  while resposta != 'p':
+    id_produto = ler_produto(lista_produtos)
+    pedido_itens.append(id_produto)
+    if not id_produto:
+      return
+  
+    qtd = ler_quantidade(lista_produtos,id_produto)
+    pedido_itens_qtd.append(qtd)
+    if not qtd:
+      return
   
   if not lista_pedidos:  # Se a lista estiver vazia, começa com 1
       id = 1
